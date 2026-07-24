@@ -81,6 +81,14 @@ text_overrun_behavior = 5
 
 [node name="EmailGenerator" type="Node" parent="." unique_id=1816088348]
 script = ExtResource("4_ec30c")
+people = Array[String](["Boss", "User18362"])
+groups = Array[String](["Coworkers", "Users"])
+"Boss : Person" = "Coworkers"
+"User18362 : Person" = " Users"
+"Coworkers : Topics" = PackedStringArray("hi")
+"Users : Topics" = PackedStringArray()
+"Coworker Topics : Extended" = null
+"User Topics : Extended" = null
 
 [node name="FlavorTextController" type="Node" parent="." unique_id=1545654535]
 script = ExtResource("2_hkori")
