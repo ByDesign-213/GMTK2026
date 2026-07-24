@@ -112,30 +112,60 @@ func _get_property_list():
 # changing this function may result in Godot crashing, and my script breaking, as this runs even while in the editor. you have been warned
 func _get(property):
 	property = property.replace("read: ", "").replace("accept: ", "").replace("decline: ", "").replace("spam: ", "").replace("upload: ", "")
-	if property in read_topics:
-		if topics_expanded.has(property):
-			return topics_expanded[property]
-		else:
-			topics_expanded[property] = ""
-			return property
+	#if property in read_topics:
+	if topics_expanded.has(property):
+		return topics_expanded[property]
+	else:
+		topics_expanded[property] = ""
+		return property
 	return null
 
 # changing this function may result in Godot crashing, and my script breaking, as this runs even while in the editor. you have been warned
 func _set(property, value):
+	var property_type
+	#if property.contains("read: "):
+		#property_type = "read"
+	#if property.contains("accept: "):
+		#property_type = "accept"
+	#if property.contains("decline: "):
+		#property_type = "decline"
+	#if property.contains("spam: "):
+		#property_type = "spam"
+	#if property.contains("upload: "):
+		#property_type = "upload"
+	
 	property = property.replace("read: ", "").replace("accept: ", "").replace("decline: ", "").replace("spam: ", "").replace("upload: ", "")
-	if property in read_topics:
-		topics_expanded[property] = value
-		return true
+	#if property_type == "read":
+	
+	#if topics_expanded.has(property):
+	topics_expanded[property] = value
+	return true
+	#if property_type == "accept":
+		#topics_expanded[property] = value
+		#return true
+	#if property_type == "decline":
+		#topics_expanded[property] = value
+		#return true
+	#if property_type == "spam":
+		#topics_expanded[property] = value
+		#return true
+	#if property_type == "upload":
+		#topics_expanded[property] = value
+		#return true
+	
 	return false
 
 
 # creating the email
-func create_email(type):
+func construct_email(type):
+	print("sender")
 	var sender = choose_sender(type)
+	print("topic")
 	var topic = choose_topic(type)
-	var text = choose_expanded_text(topic)
+	print("text")
+	var text = choose_expanded_text(type, topic)
 	
-	return [sender + " - " + topic, text]
+	return [str(sender) + " - " + str(topic), str(text)]
 
 func choose_sender(type):
 	if type == "Normal":
@@ -161,6 +191,15 @@ func choose_topic(type):
 	if type == "Upload":
 		return upload_topics.pick_random()
 
-func choose_expanded_text(topic):
-	return get(topic)[randi_range(0, get(topic).size() - 1)] # .pick_random doesnt work for packed string arrays
+func choose_expanded_text(type, topic):
+	if type == "Normal":
+		return get("read: " + topic)[randi_range(0, get("read: " + topic).size() - 1)] # .pick_random doesnt work for packed string arrays
+	if type == "Accept":
+		return get("accept: " + topic)[randi_range(0, get("accept: " + topic).size() - 1)] # .pick_random doesnt work for packed string arrays
+	if type == "Decline":
+		return get("decline: " + topic)[randi_range(0, get("decline: " + topic).size() - 1)] # .pick_random doesnt work for packed string arrays
+	if type == "Spam":
+		return get("spam: " + topic)[randi_range(0, get("spam: " + topic).size() - 1)] # .pick_random doesnt work for packed string arrays
+	if type == "Upload":
+		return get("upload: " + topic)[randi_range(0, get("upload: " + topic).size() - 1)] # .pick_random doesnt work for packed string arrays
 # end ByDesign

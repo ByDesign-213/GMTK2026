@@ -1,10 +1,8 @@
 [gd_scene format=3 uid="uid://coeyr1oy5wo30"]
 
 [ext_resource type="Script" uid="uid://br585yyoeay5x" path="res://Scripts/Email/email.gd" id="1_hkori"]
-[ext_resource type="Script" uid="uid://b8kf2iu72ye83" path="res://Scripts/Email/flavor_text_controller.gd" id="2_hkori"]
 [ext_resource type="Texture2D" uid="uid://co17lrl57lbes" path="res://Sprites/temp_9patch_rect.png" id="2_umtb6"]
 [ext_resource type="FontFile" uid="uid://doe2y2s8d1bw7" path="res://Fonts/Monofrik Demo.ttf" id="3_6xuhd"]
-[ext_resource type="Script" uid="uid://dgqwpsc3dorgp" path="res://Scripts/Email/email_generator.gd" id="4_ec30c"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_hkori"]
 font = ExtResource("3_6xuhd")
@@ -15,7 +13,7 @@ font_color = Color(0, 0, 0, 1)
 default_font = ExtResource("3_6xuhd")
 default_font_size = 26
 
-[node name="Email" type="Control" unique_id=1747348247 node_paths=PackedStringArray("flavor_text", "expanded_email_text", "upload_button", "upload_bar", "base_read_button", "email_generator", "flavor_text_controller", "decision_stuff", "email_stuff", "upload_stuff", "all")]
+[node name="Email" type="Control" unique_id=1747348247 node_paths=PackedStringArray("flavor_text", "expanded_email_text", "upload_button", "upload_bar", "base_read_button", "email_generator", "decision_stuff", "email_stuff", "upload_stuff", "all")]
 layout_mode = 3
 anchors_preset = 0
 scale = Vector2(1.5, 1.5)
@@ -26,7 +24,6 @@ upload_button = NodePath("Buttons/Upload/Upload")
 upload_bar = NodePath("Buttons/Upload/UploadProgress")
 base_read_button = NodePath("Read")
 email_generator = NodePath("EmailGenerator")
-flavor_text_controller = NodePath("FlavorTextController")
 type = "Normal"
 decision_stuff = NodePath("Buttons/Decisions")
 email_stuff = NodePath("Buttons/EmailStuff")
@@ -46,6 +43,16 @@ patch_margin_left = 16
 patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
+
+[node name="EmailGenerator" type="Node" parent="." unique_id=1816088348]
+unique_name_in_owner = "unique_name_in_owner"
+process_mode = ""
+process_priority = ""
+process_physics_priority = ""
+process_thread_group = ""
+physics_interpolation_mode = ""
+auto_translate_mode = ""
+script = ""
 
 [node name="DecorationArrow" type="Polygon2D" parent="." unique_id=550866355]
 position = Vector2(-376.66666, 0)
@@ -78,22 +85,6 @@ label_settings = SubResource("LabelSettings_hkori")
 autowrap_mode = 3
 clip_text = true
 text_overrun_behavior = 5
-
-[node name="EmailGenerator" type="Node" parent="." unique_id=1816088348]
-script = ExtResource("4_ec30c")
-
-[node name="FlavorTextController" type="Node" parent="." unique_id=1545654535]
-script = ExtResource("2_hkori")
-read_text = Array[String](["Boss - Get back to work or else I'm not paying you!", "Bob - Party at my house tonight! We're gonna have pizza, soda, and Jenny is gonna be there. ;)", "Wife - I'm going to the store to get groceries. Do you need anything?", "User1426 - I filled out the form, but your company keeps charging me! If this keeps up I'm going to sue!", "Boss - Jill has called in sick and won't be here for the next couple of weeks.", "kid_jensen_11 - hi whats 4*3 my math teacher wont tell me"])
-expanded_read_text = Array[String](["keep reading and reading and reading"])
-decision_good_text = Array[String](["Boss - Want a raise? Your acceptional work has been recognised by the other staff.", "Discord - You got gifted 1 Month of Nitro! Do you accept?", "Colin - I handled the report. Should I send it to you so you can submit it?"])
-decision_bad_text = Array[String](["Susie - Should we fire Bob? He's been slacking off lately and we can't tell if he's actually in this company", "Wife - Take a day off! You could help around the house instead of being at work!", "H@CKER12345 - Hehehe! Give me money or you'll lose everything!"])
-expanded_decision_good_text = Array[String](["choices choices good"])
-expanded_decision_bad_text = Array[String](["choices choices bad"])
-spam_text = Array[String](["LOTTERY - You wun $10,,000!1!!!!11!!!", "Amasun - Plz confirm your acount we need to confrm it", "Itchy - Ur account got hackd. Please call 123-456-7890 to reset ur pasword."])
-expanded_spam_text = Array[String](["free bobux"])
-upload_text = Array[String](["Jack - Could you send me the tax forms file? I think I deleted my copy.", "Boss - I need that report NOW! What's taking so long!"])
-expanded_upload_text = Array[String](["man if only i didnt need to use my local mcdonalds wifi"])
 
 [node name="Buttons" type="Control" parent="." unique_id=1863970812]
 anchors_preset = 0
