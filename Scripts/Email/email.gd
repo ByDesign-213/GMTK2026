@@ -34,14 +34,20 @@ var deleted : bool = false
 var progress := 0.0
 
 var base_scale := Vector2.ONE # for easy scale animation tweaks
+var clickable_buttons: Array[Button] = [] # when new buttons are added they should be added to the buttons group
+var hovered_button: Button = null
 
 func _ready():
+	Global.fake_mouse_clicked.connect(_on_fake_mouse_clicked)
+	for node in find_children("*", "Button", true, false):
+		clickable_buttons.append(node)
+		node.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	base_scale = scale
 	all.visible = false
 	expanded_email_text.visible = false
 	
 	var random : float = randf_range(1, 100)
-	if random < 70:
+	if random < 100:
 		type = "Normal"
 		
 	else:
@@ -64,16 +70,49 @@ func _ready():
 	expanded_email_text.text = text[1]
 
 func _process(delta):
+	
+	fake_cursor_hover_behavior()
 	if Global.email_open and not open: # fixes the bug where you couldn't finish the email
 		base_read_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	else:
 		base_read_button.mouse_filter = Control.MOUSE_FILTER_STOP
-	
-	if not open:
-		if abs(get_global_mouse_position().y - global_position.y) <= 25 and abs(get_global_mouse_position().x - global_position.x) < 600: # really long way to ask if the mouse is hovering over the email :P
+			
+func _on_fake_mouse_clicked() -> void:
+		if hovered_button != null and not hovered_button.disabled:
+			hovered_button.emit_signal("pressed")
+			
+func _set_hover(button: Button, is_hovered: bool) -> void:
+	if button == null:
+		return
+	if is_hovered:
+		button.add_theme_stylebox_override("normal", button.get_theme_stylebox("hover"))
+		if not open:
 			scale += (base_scale * 1.05 - scale) / 5 # little popup animation when hovering
-		else:
+	else:
+		button.remove_theme_stylebox_override("normal")
+		if not open:
 			scale += (base_scale - scale) / 5
+			
+func fake_cursor_hover_behavior() -> void:
+	var fake_pos = Global.cursor_pos_in_subviewport(Global.monitor_container)
+	var new_hovered: Button = null
+	# iterate in reverse so topmost (last drawn/highest z) wins on overlap
+	var button_arr = clickable_buttons.duplicate()
+	button_arr.reverse()
+	for button in button_arr:
+		if button != null:
+			if not button.is_visible_in_tree() or not button.is_inside_tree() or (Global.email_open and button == base_read_button):
+				continue
+			if button.get_global_rect().abs().has_point(fake_pos):
+				new_hovered = button
+				break
+
+	if new_hovered != hovered_button:
+		_set_hover(hovered_button, false)
+		_set_hover(new_hovered, true)
+		hovered_button = new_hovered
+	
+			
 
 func delete_email(input : String): # delete email after doing little animation
 	if type == input:
@@ -87,6 +126,8 @@ func delete_email(input : String): # delete email after doing little animation
 	all.visible = false
 	Global.email_open = false # used to tell other emails to work again
 	open = false
+	Global.main.set_mouse_invert(false)
+	Global.reset_mouse_position()
 	
 	var scale_box_tween = create_tween().tween_property(self.get_node("EmailBubble"), "size", Vector2(800, 50), 0.1) # make box fit screen
 	var scale_text_tween = create_tween().tween_property(flavor_text, "size", Vector2(350, 24), 0.2) # make text fit screen
@@ -154,6 +195,11 @@ func open_email(type):
 	# start Psuedo Pakman
 	expanded_email_text.visible = true
 	# end Psuedo Pakman
+	if(type == "Spam"):
+		spam_opened()
+	
+func spam_opened():
+	Global.main.set_mouse_invert(true)
 
 
 # special interaction stuff
