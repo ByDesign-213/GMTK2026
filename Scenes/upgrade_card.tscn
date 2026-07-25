@@ -1,40 +1,47 @@
 [gd_scene format=3 uid="uid://c3wn7idsxx3tv"]
 
-[ext_resource type="Script" uid="uid://7v1hndl55h5i" path="res://Scripts/Cards/upgrade.gd" id="1_7wruj"]
+[ext_resource type="Script" uid="uid://c1i0q7rghjw1" path="res://Scripts/Cards/upgrade.gd" id="1_7wruj"]
+[ext_resource type="Script" uid="uid://coryhq6i1gdc0" path="res://Scripts/upgrade_item.gd" id="2_w0hou"]
+[ext_resource type="Resource" uid="uid://bxeglhgrv4qrr" path="res://Scripts/Cards/Upgrades/Router.tres" id="3_8kgka"]
+[ext_resource type="Resource" uid="uid://uyr82ts4pmvq" path="res://Scripts/Cards/Upgrades/Antivirus.tres" id="4_jke0c"]
+[ext_resource type="Resource" uid="uid://birtg8agljg6n" path="res://Scripts/Cards/Upgrades/Spam_filter.tres" id="5_eelos"]
 
-[node name="UpgradeCard" type="Node2D" unique_id=56110472]
-
-[node name="UpgradeButton" type="Button" parent="." unique_id=1073497964 node_paths=PackedStringArray("upgrade_name", "upgrade_description")]
-offset_right = 200.0
-offset_bottom = 300.0
+[node name="UpgradeButton" type="Button" unique_id=1073497964]
+offset_right = 297.0
+offset_bottom = 399.0
 vertical_icon_alignment = 0
 script = ExtResource("1_7wruj")
-faster_upload_name = "iRouter 18"
-faster_upload_description = "In a rare occourance, your boss has allowed you to upgrade your router. Decreaseas upload time."
-better_antivirus_name = "VirusFinder 12"
-better_antivirus_description = "By updating to the newest version of VirusFinder, your affects from virus will be reduced."
-spam_orgnizer_name = "Orgy Nizer"
-spam_orgnizer_description = "By using this new cutting edge extension you recive half of the spam mails."
-upgrade_name = NodePath("UpgradeName")
-upgrade_description = NodePath("UpgradeDescription")
+upgrade_list = Array[ExtResource("2_w0hou")]([ExtResource("3_8kgka"), ExtResource("4_jke0c"), ExtResource("5_eelos")])
 
-[node name="UpgradeName" type="Label" parent="UpgradeButton" unique_id=920796065]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2061914043]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UpgradeName" type="Label" parent="VBoxContainer" unique_id=920796065]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 0)
-layout_mode = 0
-offset_right = 200.0
-offset_bottom = 62.0
-theme_override_font_sizes/font_size = 32
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
 text = "Upgrade"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="UpgradeDescription" type="Label" parent="UpgradeButton" unique_id=1180273715]
+[node name="UpgradeTexture" type="TextureRect" parent="VBoxContainer" unique_id=807033298]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+expand_mode = 5
+
+[node name="UpgradeDescription" type="Label" parent="VBoxContainer" unique_id=1180273715]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 150)
-layout_mode = 0
-offset_left = 1.0
-offset_top = 66.0
-offset_right = 201.0
-offset_bottom = 301.0
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 32
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3

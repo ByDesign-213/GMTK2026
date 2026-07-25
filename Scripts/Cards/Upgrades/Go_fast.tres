@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="UpgradeItem" format=3 uid="uid://bsiba7mxpv537"]
+
+[ext_resource type="Script" uid="uid://coryhq6i1gdc0" path="res://Scripts/upgrade_item.gd" id="1_okqk5"]
+
+[resource]
+script = ExtResource("1_okqk5")
+name = "Gotta go fast"
+desc = "You're faster... but so is everyone else."
+effects = Dictionary[int, float]({
+0: 20.0,
+3: 20.0
+})
+metadata/_custom_type_script = "uid://coryhq6i1gdc0"

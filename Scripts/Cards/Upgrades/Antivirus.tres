@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UpgradeItem" format=3 uid="uid://uyr82ts4pmvq"]
+
+[ext_resource type="Script" uid="uid://coryhq6i1gdc0" path="res://Scripts/upgrade_item.gd" id="1_g5jie"]
+[ext_resource type="Texture2D" uid="uid://t2bvfrkkqyot" path="res://Sprites/antivirus.png" id="1_okv8x"]
+
+[resource]
+script = ExtResource("1_g5jie")
+name = "Antivirus"
+desc = "Finally get round to that update."
+image = ExtResource("1_okv8x")
+effects = Dictionary[int, float]({
+1: -5.0
+})
+metadata/_custom_type_script = "uid://coryhq6i1gdc0"

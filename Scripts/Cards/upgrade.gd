@@ -2,48 +2,61 @@
 extends Button
 class_name BaseUpgrade
 
-@export_group("Names")
-@export_subgroup("Faster Upload")
-@export var faster_upload_name: String
-@export var faster_upload_description: String
+@export_group("Display")
+@export var display_name: String:
+	set(name):
+		display_name = name
+		%UpgradeName.text = display_name
+@export var display_desc: String:
+	set(desc):
+		display_desc = desc
+		%UpgradeDescription.text = display_desc
+@export var display_image: Texture:
+	set(image):
+		display_image = image
+		%UpgradeTexture.texture = display_image
 
-@export_subgroup("Better Antivirus")
-@export var better_antivirus_name: String
-@export var better_antivirus_description: String
+var effects: Dictionary[UpgradeType, float]
 
-@export_subgroup("Spam Orgnizer")
-@export var spam_orgnizer_name: String
-@export var spam_orgnizer_description: String
-
-@export_group("Labels")
-@export var upgrade_name: Label
-@export var upgrade_description: Label
+@export var upgrade_list: Array[UpgradeItem]
 
 enum UpgradeType {
-	FASTER_UPLOAD,
-	BETTER_ANTIVIRUS,
-	SPAM_ORGNIZER
+	UPLOAD_SPEED,
+	VIRUS_CHANCE,
+	SPAM_CHANCE,
+	EMAIL_SPEED
 }
-var upgrade_type: UpgradeType
 
 func _ready() -> void:
 	connect("pressed", pressed)
-	# Get the values inside the enum as an array and then pick a random type to assign
-	upgrade_type = UpgradeType.values().pick_random()
-
-	match upgrade_type:
-		UpgradeType.FASTER_UPLOAD:
-			upgrade_name.text = faster_upload_name
-			upgrade_description.text = faster_upload_description
-			
-		UpgradeType.BETTER_ANTIVIRUS:
-			upgrade_name.text = better_antivirus_name
-			upgrade_description.text = better_antivirus_description
-			
-		UpgradeType.SPAM_ORGNIZER:
-			upgrade_name.text = spam_orgnizer_name
-			upgrade_description.text = spam_orgnizer_description
+	random_card()
 
 func pressed() -> void:
 	pass
 # end Psuedo Pakman
+
+func random_card() -> void:
+	# Pick a random upgrade from predefined list.
+	var random_upgrade = upgrade_list.pick_random()
+	print("picking random upgrade:" + str(random_upgrade))
+	
+	display_name = random_upgrade.name
+	display_desc = random_upgrade.desc
+	effects = random_upgrade.effects
+	
+	if random_upgrade != null:
+		display_image = random_upgrade.image
+	
+	#Cycles through upgrade effects if more than one, and appends everything to description.
+	for effect in random_upgrade.effects:
+		match effect:
+			UpgradeType.UPLOAD_SPEED:
+				display_desc += "\nUpload speed "
+			UpgradeType.VIRUS_CHANCE:
+				display_desc += "\nVirus chance "
+			UpgradeType.SPAM_CHANCE:
+				display_desc += "\nSpam chance "
+		# Adds a plus if a positive number.
+		if random_upgrade.effects[effect] > 0:
+			display_desc += " + "
+		display_desc += str(int(random_upgrade.effects[effect]))

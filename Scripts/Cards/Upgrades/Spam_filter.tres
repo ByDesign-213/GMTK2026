@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="UpgradeItem" format=3 uid="uid://birtg8agljg6n"]
+
+[ext_resource type="Script" uid="uid://coryhq6i1gdc0" path="res://Scripts/upgrade_item.gd" id="1_3lnq6"]
+[ext_resource type="Texture2D" uid="uid://x2e3dnwolqe6" path="res://Sprites/spam.png" id="1_vhq0r"]
+
+[resource]
+script = ExtResource("1_3lnq6")
+name = "Spam filter"
+desc = "Get rid of that junk! Well, some of it."
+image = ExtResource("1_vhq0r")
+effects = Dictionary[int, float]({
+2: -10.0
+})
+metadata/_custom_type_script = "uid://coryhq6i1gdc0"

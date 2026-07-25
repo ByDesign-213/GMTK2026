@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://dfboq75yxwk7y"]
+
+[sub_resource type="GDScript" id="GDScript_raqdg"]
+script/source = "# start Psuedo Pakman
+extends Button
+class_name BaseUpgrade
+
+@export_group(\"Names\")
+@export_subgroup(\"Faster Upload\")
+@export var faster_upload_name: String
+@export var faster_upload_description: String
+
+@export_subgroup(\"Better Antivirus\")
+@export var better_antivirus_name: String
+@export var better_antivirus_description: String
+
+@export_subgroup(\"Spam Orgnizer\")
+@export var spam_orgnizer_name: String
+@export var spam_orgnizer_description: String
+
+@export_group(\"Labels\")
+@export var upgrade_name: Label
+@export var upgrade_description: Label
+
+enum UpgradeType {
+	FASTER_UPLOAD,
+	BETTER_ANTIVIRUS,
+	SPAM_ORGNIZER
+}
+var upgrade_type: UpgradeType
+
+func _ready() -> void:
+	connect(\"pressed\", pressed)
+	# Get the values inside the enum as an array and then pick a random type to assign
+	upgrade_type = UpgradeType.values().pick_random()
+
+	match upgrade_type:
+		UpgradeType.FASTER_UPLOAD:
+			upgrade_name.text = faster_upload_name
+			upgrade_description.text = faster_upload_description
+			
+		UpgradeType.BETTER_ANTIVIRUS:
+			upgrade_name.text = better_antivirus_name
+			upgrade_description.text = better_antivirus_description
+			
+		UpgradeType.SPAM_ORGNIZER:
+			upgrade_name.text = spam_orgnizer_name
+			upgrade_description.text = spam_orgnizer_description
+
+func pressed() -> void:
+	pass
+# end Psuedo Pakman
+"
+
+[node name="UpgradeCard" type="Node2D" unique_id=56110472]
+
+[node name="UpgradeButton" type="Button" parent="." unique_id=1073497964 node_paths=PackedStringArray("upgrade_name", "upgrade_description")]
+offset_right = 200.0
+offset_bottom = 300.0
+vertical_icon_alignment = 0
+script = SubResource("GDScript_raqdg")
+faster_upload_name = "iRouter 18"
+faster_upload_description = "In a rare occourance, your boss has allowed you to upgrade your router. Decreaseas upload time."
+better_antivirus_name = "VirusFinder 12"
+better_antivirus_description = "By updating to the newest version of VirusFinder, your affects from virus will be reduced."
+spam_orgnizer_name = "Orgy Nizer"
+spam_orgnizer_description = "By using this new cutting edge extension you recive half of the spam mails."
+upgrade_name = NodePath("UpgradeName")
+upgrade_description = NodePath("UpgradeDescription")
+
+[node name="UpgradeName" type="Label" parent="UpgradeButton" unique_id=920796065]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 62.0
+theme_override_font_sizes/font_size = 32
+text = "Upgrade"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="UpgradeDescription" type="Label" parent="UpgradeButton" unique_id=1180273715]
+custom_minimum_size = Vector2(120, 150)
+layout_mode = 0
+offset_left = 1.0
+offset_top = 66.0
+offset_right = 201.0
+offset_bottom = 301.0
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

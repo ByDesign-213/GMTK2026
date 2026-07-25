@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="UpgradeItem" format=3 uid="uid://dbpeoebxmx4b3"]
+
+[ext_resource type="Texture2D" uid="uid://dab5brtjhsvlt" path="res://Sprites/firewall.png" id="1_6pf6y"]
+[ext_resource type="Script" uid="uid://coryhq6i1gdc0" path="res://Scripts/upgrade_item.gd" id="1_n5gfy"]
+
+[resource]
+script = ExtResource("1_n5gfy")
+name = "Firewall"
+desc = "Blocks bad stuff, but also a lil good stuff."
+image = ExtResource("1_6pf6y")
+effects = Dictionary[int, float]({
+0: -5.0,
+1: -20.0
+})
+metadata/_custom_type_script = "uid://coryhq6i1gdc0"

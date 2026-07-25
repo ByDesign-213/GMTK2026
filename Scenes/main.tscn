@@ -4,12 +4,19 @@
 [ext_resource type="PackedScene" uid="uid://bs2gvfj1541lm" path="res://Scenes/manager.tscn" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://pcq8rppqacnt" path="res://Scenes/main_menu.tscn" id="2_6bp64"]
 [ext_resource type="Shader" uid="uid://d33krf4ystq50" path="res://Shaders/crt.gdshader" id="2_kry3j"]
+[ext_resource type="Script" uid="uid://coryhq6i1gdc0" path="res://Scripts/upgrade_item.gd" id="3_ynf5e"]
 [ext_resource type="FontFile" uid="uid://doe2y2s8d1bw7" path="res://Fonts/Monofrik Demo.ttf" id="4_21xkr"]
+[ext_resource type="Resource" uid="uid://birtg8agljg6n" path="res://Scripts/Cards/Upgrades/Spam_filter.tres" id="4_jkdf5"]
 [ext_resource type="Texture2D" uid="uid://ddh8dmaeup3fr" path="res://Sprites/game_jam_2026_gmtk_04.png" id="5_kry3j"]
 [ext_resource type="Script" uid="uid://sqlam6id7o4t" path="res://Scripts/audio_manager.gd" id="8_hptm8"]
 [ext_resource type="AudioStream" uid="uid://bw31mlg7d3t1q" path="res://Audio/SFX/mx_stinger_correct.wav" id="8_ynf5e"]
 [ext_resource type="AudioStream" uid="uid://baf3j6mtdkeit" path="res://Audio/SFX/mx_stinger_incorrect.wav" id="9_hptm8"]
 [ext_resource type="Texture2D" uid="uid://cxlw7qxtevgah" path="res://Sprites/mouse.png" id="11_d1ilt"]
+[ext_resource type="Resource" uid="uid://uyr82ts4pmvq" path="res://Scripts/Cards/Upgrades/Antivirus.tres" id="5_wsu2k"]
+[ext_resource type="PackedScene" uid="uid://c3wn7idsxx3tv" path="res://Scenes/upgrade_card.tscn" id="6_344ge"]
+[ext_resource type="Resource" uid="uid://bxeglhgrv4qrr" path="res://Scripts/Cards/Upgrades/Router.tres" id="6_k12tt"]
+[ext_resource type="Resource" uid="uid://bsiba7mxpv537" path="res://Scripts/Cards/Upgrades/Go_fast.tres" id="7_h1bgf"]
+[ext_resource type="Resource" uid="uid://dbpeoebxmx4b3" path="res://Scripts/Cards/Upgrades/Firewall.tres" id="8_b3802"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_up85j"]
 font = ExtResource("4_21xkr")
@@ -41,9 +48,14 @@ shader_parameter/roll_strength = 0.15
 shader_parameter/glow_strength = 0.25
 shader_parameter/glow_threshold = 0.65
 
+[sub_resource type="Theme" id="Theme_g4v7s"]
+default_font = ExtResource("4_21xkr")
+default_font_size = 56
+
 [node name="Main" type="Node2D" unique_id=1107406334 node_paths=PackedStringArray("counter", "time")]
 script = ExtResource("1_bo1nx")
 main_menu = ExtResource("2_6bp64")
+upgrade_list = Array[ExtResource("3_ynf5e")]([ExtResource("4_jkdf5"), ExtResource("5_wsu2k"), ExtResource("6_k12tt"), ExtResource("7_h1bgf"), ExtResource("8_b3802")])
 counter = NodePath("Monitor/SubViewport/Manager/TopBar/Score")
 time = NodePath("Monitor/SubViewport/Manager/BottomBar/Time")
 
@@ -103,12 +115,13 @@ offset_bottom = 1151.0
 [node name="Time" type="Label" parent="Monitor/SubViewport/Manager/BottomBar" unique_id=1809968647]
 z_index = 11
 layout_mode = 0
-offset_left = 1172.0
+offset_left = 1019.0
 offset_top = 26.00003
-offset_right = 1343.0
+offset_right = 1364.0
 offset_bottom = 163.00003
 text = "12:00"
 label_settings = SubResource("LabelSettings_up85j")
+horizontal_alignment = 2
 
 [node name="CRTShader" type="ColorRect" parent="Monitor/SubViewport" unique_id=1163136055]
 z_index = 4096
@@ -128,15 +141,60 @@ zoom = Vector2(0.335, 0.335)
 z_index = 10
 texture = ExtResource("5_kry3j")
 
-[node name="AudioManager" type="Node" parent="." unique_id=2147465080 node_paths=PackedStringArray("correct_sfx", "incorrect_sfx")]
-script = ExtResource("8_hptm8")
-correct_sfx = NodePath("SFX/Correct")
-incorrect_sfx = NodePath("SFX/Incorrect")
+[node name="UpgradeBox" type="ColorRect" parent="." unique_id=1430341454]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+z_index = 10
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -643.75
+offset_top = -541.0
+offset_right = 643.75
+offset_bottom = 541.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="SFX" type="Node" parent="AudioManager" unique_id=2118257941]
+[node name="UpgradeHeader" type="Label" parent="UpgradeBox" unique_id=476790690]
+z_index = 11
+layout_mode = 0
+offset_right = 584.0
+offset_bottom = 57.0
+text = "Choose upgrade:"
+label_settings = SubResource("LabelSettings_up85j")
 
-[node name="Correct" type="AudioStreamPlayer" parent="AudioManager/SFX" unique_id=1575081138]
-stream = ExtResource("8_ynf5e")
+[node name="UpgradeChoice" type="HBoxContainer" parent="UpgradeBox" unique_id=1078353247]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -549.0
+offset_top = -340.0
+offset_right = 577.0
+offset_bottom = 294.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UpgradeCard" parent="UpgradeBox/UpgradeChoice" unique_id=56110472 instance=ExtResource("6_344ge")]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+
+[node name="UpgradeCard2" parent="UpgradeBox/UpgradeChoice" unique_id=2091806333 instance=ExtResource("6_344ge")]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+
+[node name="UpgradeCard3" parent="UpgradeBox/UpgradeChoice" unique_id=414813578 instance=ExtResource("6_344ge")]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
 
 [node name="Incorrect" type="AudioStreamPlayer" parent="AudioManager/SFX" unique_id=411498119]
 stream = ExtResource("9_hptm8")
@@ -147,3 +205,27 @@ stream = ExtResource("9_hptm8")
 unique_name_in_owner = true
 texture = ExtResource("11_d1ilt")
 offset = Vector2(16, 16)
+[node name="AcceptButton" type="Button" parent="UpgradeBox" unique_id=364760450]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -106.0
+offset_top = -112.0
+offset_right = 106.0
+offset_bottom = -54.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_g4v7s")
+text = "Accept"
+
+[node name="UpgradeTimer" type="Timer" parent="." unique_id=768330774]
+wait_time = 2.5
+
+[connection signal="pressed" from="UpgradeBox/UpgradeChoice/UpgradeCard" to="." method="_on_upgrade_selected" flags=18]
+[connection signal="pressed" from="UpgradeBox/UpgradeChoice/UpgradeCard2" to="." method="_on_upgrade_selected" flags=18]
+[connection signal="pressed" from="UpgradeBox/UpgradeChoice/UpgradeCard3" to="." method="_on_upgrade_selected" flags=18]
+[connection signal="pressed" from="UpgradeBox/AcceptButton" to="." method="_on_accept_button_pressed"]
+[connection signal="timeout" from="UpgradeTimer" to="." method="_on_upgrade_timer_timeout"]
