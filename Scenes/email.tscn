@@ -14,7 +14,7 @@ font_color = Color(0, 0, 0, 1)
 default_font = ExtResource("3_6xuhd")
 default_font_size = 26
 
-[node name="Email" type="Control" unique_id=1747348247 node_paths=PackedStringArray("flavor_text", "expanded_email_text", "upload_button", "upload_bar", "base_read_button", "email_list", "decision_stuff", "email_stuff", "upload_stuff", "all", "correct_sfx", "incorrect_sfx")]
+[node name="Email" type="Control" unique_id=1747348247 node_paths=PackedStringArray("flavor_text", "expanded_email_text", "upload_button", "upload_bar", "base_read_button", "email_list", "decision_stuff", "email_stuff", "upload_stuff", "all")]
 layout_mode = 3
 anchors_preset = 0
 scale = Vector2(1.5, 1.5)
@@ -30,8 +30,6 @@ decision_stuff = NodePath("Buttons/Decisions")
 email_stuff = NodePath("Buttons/EmailStuff")
 upload_stuff = NodePath("Buttons/Upload")
 all = NodePath("Buttons")
-correct_sfx = NodePath("")
-incorrect_sfx = NodePath("")
 
 [node name="EmailsList" type="Node" parent="." unique_id=1816088348]
 script = ExtResource("2_6xuhd")
